@@ -42,6 +42,7 @@ export default function App() {
     }
 
     if (inputValue === "") {
+      setExistingTask(false);
       console.warn("you need to write a task first");
     } else {
       setTasks((tasks) => [...tasks, newtask]);
@@ -57,6 +58,7 @@ export default function App() {
   const removeTask = (task: ITask) => {
     deleteTask(task);
     getTasks(setTasks);
+    setExistingTask(false);
   };
 
   const completeTask = (completedTask: ITask) => {

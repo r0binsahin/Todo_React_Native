@@ -10,15 +10,10 @@ export const AlreadyExistingTask = () => {
 
 const styles = StyleSheet.create({
   msgBox: {
-    paddingVertical: 10,
     paddingHorizontal: 10,
     width: 370,
-    backgroundColor: "white",
-    borderRadius: 8,
-    borderColor: "red",
-    borderWidth: 1,
 
-    marginBottom: 10,
+    marginBottom: 5,
   },
 
   msgBoxText: {
