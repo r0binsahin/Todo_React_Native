@@ -41,13 +41,17 @@ export default function App() {
       return;
     }
 
-    setTasks((tasks) => [...tasks, newtask]);
-    addTask(newtask);
-    getTasks(setTasks);
+    if (inputValue === "") {
+      console.warn("you need to write a task first");
+    } else {
+      setTasks((tasks) => [...tasks, newtask]);
+      addTask(newtask);
+      getTasks(setTasks);
 
-    console.log(tasks);
-    setInputValue("");
-    setExistingTask(false);
+      console.log(tasks);
+      setInputValue("");
+      setExistingTask(false);
+    }
   };
 
   const removeTask = (task: ITask) => {
@@ -122,6 +126,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#69306D",
   },
   items: {
     marginTop: 30,
