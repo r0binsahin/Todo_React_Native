@@ -6,13 +6,21 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "db": "json-server --watch db.json"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/react-native-vector-icons": "^6.4.17",
+    "axios": "^1.6.2",
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",
+    "i": "^0.3.7",
+    "json-server": "^0.17.4",
+    "npm": "^10.2.3",
     "react": "18.2.0",
-    "react-native": "0.72.6"
+    "react-native": "0.72.6",
+    "react-native-vector-icons": "^10.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
