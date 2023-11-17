@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { TaskHolder } from "./components/Task";
-import { useEffect, useState } from "react";
+import { TaskHolder } from "./components/TaskHolder";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ITask } from "./models/ITask";
 import { addTask, deleteTask, editTask, getTasks } from "./services/crud";
 import { AlreadyExistingTask } from "./components/AlreadyExistingTask";
 import { NoTaskToDisplay } from "./components/NoTaskToDisplay";
+import Modal from "react-native-modal";
 
 export default function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -68,9 +69,41 @@ export default function App() {
     setExistingTask(false);
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTask, setCurrentTask] = useState<ITask>({
+    title: "",
+    isDone: false,
+  });
+  const [valueToEdit, setValueToEdit] = useState("");
+
+  const editingCompleted = () => {
+    const updatedTasks = tasks.map((task) =>
+      task === currentTask ? { ...task, title: valueToEdit } : task
+    );
+    setTasks(updatedTasks);
+    editTask({ ...currentTask, title: valueToEdit });
+
+    setIsEditing(false);
+    setValueToEdit("");
+    console.log(valueToEdit);
+  };
+
   return (
     <View style={styles.container}>
-      {/* Todays tasks */}
+      <Modal isVisible={isEditing}>
+        <View>
+          <TextInput
+            value={valueToEdit}
+            onChangeText={(valueToEdit) => setValueToEdit(valueToEdit)}
+          />
+          <TouchableOpacity onPress={() => editingCompleted()}>
+            <View>
+              <Text>Done</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
       <View style={styles.taskWrapper}>
         <Text style={styles.sectionTitle}> Today's tasks</Text>
 
@@ -85,6 +118,9 @@ export default function App() {
                 completeTask={() => completeTask(task)}
                 task={task}
                 taskTitle={task.title}
+                setIsEditing={setIsEditing}
+                setCurrentTask={setCurrentTask}
+                setValueToEdit={setValueToEdit}
               />
             ))}
           </View>

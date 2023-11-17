@@ -9,6 +9,9 @@ interface ITaskHolderProps {
   task: ITask;
   handleDelete: (task: ITask) => void;
   completeTask: (task: ITask) => void;
+  setCurrentTask: (task: ITask) => void;
+  setIsEditing: (value: boolean) => void;
+  setValueToEdit: (value: string) => void;
 }
 
 export const TaskHolder = ({
@@ -16,7 +19,15 @@ export const TaskHolder = ({
   task,
   handleDelete,
   completeTask,
+  setCurrentTask,
+  setIsEditing,
+  setValueToEdit,
 }: ITaskHolderProps) => {
+  const handleEditing = (task: ITask) => {
+    setValueToEdit(task.title);
+    setCurrentTask(task);
+    setIsEditing(true);
+  };
   return (
     <View style={{ ...styles.items, opacity: task.isDone ? 0.5 : 1 }}>
       <View style={styles.itemLeft}>
@@ -39,6 +50,7 @@ export const TaskHolder = ({
           {taskTitle}
         </Text>
       </View>
+
       <View style={styles.iconWrapper}>
         <TouchableOpacity onPress={() => handleDelete(task)}>
           <MaterialCommunityIcons
@@ -47,7 +59,7 @@ export const TaskHolder = ({
             color="#FF66B3"
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleEditing(task)}>
           <Foundation name="page-edit" size={26} color="#FF66B3" />
         </TouchableOpacity>
       </View>
