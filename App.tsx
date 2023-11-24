@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -8,13 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Modal from "react-native-modal";
 import { TaskHolder } from "./components/TaskHolder";
-import { useEffect, useState } from "react";
-import { ITask } from "./models/ITask";
-import { addTask, deleteTask, editTask, getTasks } from "./services/crud";
 import { AlreadyExistingTask } from "./components/AlreadyExistingTask";
 import { NoTaskToDisplay } from "./components/NoTaskToDisplay";
-import Modal from "react-native-modal";
+import { ITask } from "./models/ITask";
+import { addTask, deleteTask, editTask, getTasks } from "./services/crud";
 
 export default function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -28,11 +28,11 @@ export default function App() {
   const handleAddTask = async () => {
     Keyboard.dismiss();
 
-    const taskAlreadyExists = tasks.some((task) => {
-      return task.title === inputValue && task.isDone === false;
-    });
+    const taskAlreadyExists = tasks.some(
+      (task) => task.title === inputValue && task.isDone === false
+    );
 
-    const newtask: ITask = {
+    const newTask: ITask = {
       title: inputValue,
       isDone: false,
     };
@@ -44,13 +44,12 @@ export default function App() {
 
     if (inputValue === "") {
       setExistingTask(false);
-      console.warn("you need to write a task first");
+      console.warn("You need to write a task first");
     } else {
-      setTasks((tasks) => [...tasks, newtask]);
-      addTask(newtask);
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+      addTask(newTask);
       getTasks(setTasks);
 
-      console.log(tasks);
       setInputValue("");
       setExistingTask(false);
     }
@@ -85,7 +84,6 @@ export default function App() {
 
     setIsEditing(false);
     setValueToEdit("");
-    console.log(valueToEdit);
   };
 
   return (
@@ -95,7 +93,7 @@ export default function App() {
           <TextInput
             style={styles.editInput}
             value={valueToEdit}
-            onChangeText={(valueToEdit) => setValueToEdit(valueToEdit)}
+            onChangeText={(text) => setValueToEdit(text)}
           />
           <TouchableOpacity onPress={() => editingCompleted()}>
             <View style={styles.doneBtn}>
@@ -106,7 +104,7 @@ export default function App() {
       </Modal>
 
       <View style={styles.taskWrapper}>
-        <Text style={styles.sectionTitle}> Today's tasks</Text>
+        <Text style={styles.sectionTitle}>Today's tasks</Text>
 
         {tasks.length === 0 ? (
           <NoTaskToDisplay />
@@ -127,17 +125,17 @@ export default function App() {
           </View>
         )}
       </View>
-      {/* Write a task */}
+
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
         <View style={styles.inputContainer}>
-          {existingTask ? <AlreadyExistingTask /> : null}
+          {existingTask && <AlreadyExistingTask />}
           <View style={styles.inputAndBtn}>
             <TextInput
               style={styles.input}
-              placeholder="write a task"
+              placeholder="Write a task"
               value={inputValue}
               onChangeText={(text) => setInputValue(text)}
             />

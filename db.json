@@ -1,9 +1,3 @@
 {
-  "tasks": [
-    {
-      "title": "Test",
-      "isDone": false,
-      "id": 1
-    }
-  ]
+  "tasks": []
 }
