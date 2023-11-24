@@ -1,19 +1,9 @@
 {
   "tasks": [
     {
-      "title": "Test 2 updated",
+      "title": "Test",
       "isDone": false,
-      "id": 2
-    },
-    {
-      "title": "Test 3",
-      "isDone": false,
-      "id": 3
-    },
-    {
-      "title": "New",
-      "isDone": false,
-      "id": 4
+      "id": 1
     }
   ]
 }

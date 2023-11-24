@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { TaskHolder } from "./components/TaskHolder";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ITask } from "./models/ITask";
 import { addTask, deleteTask, editTask, getTasks } from "./services/crud";
 import { AlreadyExistingTask } from "./components/AlreadyExistingTask";
@@ -91,13 +91,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Modal isVisible={isEditing}>
-        <View>
+        <View style={styles.editContainer}>
           <TextInput
+            style={styles.editInput}
             value={valueToEdit}
             onChangeText={(valueToEdit) => setValueToEdit(valueToEdit)}
           />
           <TouchableOpacity onPress={() => editingCompleted()}>
-            <View>
+            <View style={styles.doneBtn}>
               <Text>Done</Text>
             </View>
           </TouchableOpacity>
@@ -153,6 +154,27 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  editContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    Width: "80%",
+    borderWidth: 1,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+  },
+
+  editInput: {
+    width: "70%",
+    fontSize: 18,
+  },
+
+  doneBtn: {
+    backgroundColor: "#57CC99",
+    padding: 10,
+    borderRadius: 8,
+  },
   container: {
     flex: 1,
     backgroundColor: "#F9B9C3",
